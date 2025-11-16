@@ -132,7 +132,7 @@ const ImageInput: React.FC<ImageInputProps> = ({ onAnalyze, t }) => {
     };
 
     return (
-        <div className="w-full max-w-2xl mx-auto">
+        <div className="w-full max-w-3xl mx-auto">
             {isCameraOpen && <CameraModal t={t} onClose={() => setIsCameraOpen(false)} onCapture={handleCameraCapture} />}
             <div
                 onClick={handleUploadAreaClick}
@@ -140,28 +140,44 @@ const ImageInput: React.FC<ImageInputProps> = ({ onAnalyze, t }) => {
                 onDragOver={handleDragEvents}
                 onDragLeave={handleDragEvents}
                 onDrop={handleDrop}
-                className={`cursor-pointer border-2 border-dashed rounded-xl p-8 text-center transition-colors duration-300 ${dragging ? 'border-green-500 bg-green-100' : 'border-gray-300 bg-white hover:border-green-400 hover:bg-green-50'}`}
+                className={`cursor-pointer border-3 border-dashed rounded-3xl p-12 text-center transition-all duration-300 shadow-lg ${dragging ? 'border-green-500 bg-gradient-to-br from-green-50 to-emerald-100 scale-105 shadow-2xl' : 'border-green-300 bg-white hover:border-green-400 hover:bg-gradient-to-br hover:from-green-50 hover:to-white hover:shadow-xl card-hover'}`}
             >
                 <div className="flex flex-col items-center">
-                    <div className="p-4 bg-green-100 rounded-full mb-4">
+                    <div className="p-6 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full mb-6 shadow-lg float-animation">
                         <UploadIcon/>
                     </div>
-                    <p className="mt-2 text-lg text-gray-600">{t('uploadImage')} {t('or')} <span className="font-semibold text-green-600">{t('dropImage')}</span></p>
-                    <p className="text-sm text-gray-500 mt-1">PNG, JPG, WEBP up to 10MB</p>
+                    <p className="mt-2 text-xl font-semibold text-gray-700">
+                        {t('uploadImage')} {t('or')} <span className="font-bold text-green-600">{t('dropImage')}</span>
+                    </p>
+                    <p className="text-base text-gray-500 mt-3 font-medium">PNG, JPG, WEBP up to 10MB</p>
+                    <div className="mt-6 flex items-center space-x-3 text-sm text-gray-600">
+                        <span className="flex items-center">
+                            <svg className="w-5 h-5 mr-1 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                            </svg>
+                            Fast Analysis
+                        </span>
+                        <span className="flex items-center">
+                            <svg className="w-5 h-5 mr-1 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                            </svg>
+                            Secure
+                        </span>
+                    </div>
                     <input type="file" accept="image/*" ref={fileInputRef} onChange={onFileChange} className="hidden" />
                 </div>
             </div>
-            <div className="flex items-center justify-center my-4">
-                <span className="flex-grow bg-gray-300 h-px"></span>
-                <span className="mx-4 text-gray-500 font-semibold">{t('or')}</span>
-                <span className="flex-grow bg-gray-300 h-px"></span>
+            <div className="flex items-center justify-center my-6">
+                <span className="flex-grow bg-gradient-to-r from-transparent via-gray-300 to-transparent h-px"></span>
+                <span className="mx-6 text-gray-600 font-bold text-sm uppercase tracking-wide">{t('or')}</span>
+                <span className="flex-grow bg-gradient-to-r from-transparent via-gray-300 to-transparent h-px"></span>
             </div>
             <button
                 onClick={(e) => {
-                    e.stopPropagation(); // Prevent the upload area's click handler from firing
+                    e.stopPropagation();
                     setIsCameraOpen(true);
                 }}
-                className="w-full flex items-center justify-center py-3 px-6 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-transform transform hover:scale-105"
+                className="w-full flex items-center justify-center py-4 px-8 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold rounded-2xl shadow-lg hover:from-green-700 hover:to-emerald-700 focus:outline-none focus:ring-4 focus:ring-green-300 transition-all transform hover:scale-105 glow-button text-lg"
             >
                 <CameraIcon />
                 {t('useCamera')}
