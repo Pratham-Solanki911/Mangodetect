@@ -62,7 +62,25 @@ This application uses a secure architecture to protect your API key:
 
 ### Production Deployment
 
-For production deployments:
+#### Docker Deployment (Recommended)
+
+The easiest way to deploy is using Docker:
+
+```bash
+# 1. Create .env file with your API key
+echo "GEMINI_API_KEY=your_api_key_here" > .env
+
+# 2. Build and run with Docker Compose
+docker-compose up -d
+
+# 3. Access the application at http://localhost:3001
+```
+
+For detailed Docker instructions, see [DOCKER.md](./DOCKER.md)
+
+#### Manual Deployment
+
+For manual deployments:
 1. Deploy the backend server with `GEMINI_API_KEY` set in environment variables
 2. Deploy the frontend with `VITE_API_URL` pointing to your backend server
 3. Do **not** set `VITE_GEMINI_API_KEY` in production (disables chatbot feature)
