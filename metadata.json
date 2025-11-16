@@ -1,0 +1,8 @@
+{
+  "name": "Mango Guard: AI Disease Detector",
+  "description": "An AI-powered app to detect diseases in mango leaves and fruit. Upload a photo to get an instant analysis, treatment suggestions, and talk to an AI agricultural assistant.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
