@@ -36,26 +36,30 @@ const Logo = () => (
 
 const Header: React.FC<HeaderProps> = ({ language, setLanguage, t }) => {
     return (
-        <header className="bg-white shadow-md p-4 flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-                <Logo />
-                <div>
-                    <h1 className="text-2xl font-bold text-green-800">{t('title')}</h1>
-                    <p className="text-sm text-gray-500">{t('subtitle')}</p>
+        <header className="gradient-bg shadow-lg p-6">
+            <div className="container mx-auto flex justify-between items-center">
+                <div className="flex items-center space-x-4">
+                    <div className="float-animation">
+                        <Logo />
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-white drop-shadow-md">{t('title')}</h1>
+                        <p className="text-sm text-white/90 font-medium">{t('subtitle')}</p>
+                    </div>
                 </div>
-            </div>
-            <div className="relative">
-                <select
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value as Language)}
-                    className="appearance-none bg-gray-100 border border-gray-300 rounded-md py-2 pl-4 pr-10 text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
-                >
-                    {(Object.keys(languageNames) as Language[]).map(lang => (
-                        <option key={lang} value={lang}>{languageNames[lang]}</option>
-                    ))}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                     <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                <div className="relative">
+                    <select
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value as Language)}
+                        className="appearance-none bg-white/95 backdrop-blur-sm border-2 border-white/50 rounded-lg py-2.5 pl-4 pr-10 text-gray-800 font-medium hover:bg-white hover:border-white focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition shadow-md"
+                    >
+                        {(Object.keys(languageNames) as Language[]).map(lang => (
+                            <option key={lang} value={lang}>{languageNames[lang]}</option>
+                        ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                         <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
                 </div>
             </div>
         </header>
