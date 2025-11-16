@@ -117,13 +117,23 @@ const Chatbot: React.FC<ChatbotProps> = ({ isOpen, onClose, language, t, analysi
     }, []);
 
     const startSession = useCallback(async () => {
-        if (!process.env.API_KEY || status !== 'idle') return;
-        
+        // SECURITY NOTE: The chatbot feature requires a client-side API key for real-time audio streaming.
+        // This is less secure than the image analysis which uses the backend proxy.
+        // Only enable this in development or if you understand the security implications.
+        const clientApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+        if (!clientApiKey || status !== 'idle') {
+            if (!clientApiKey) {
+                console.warn('Chatbot disabled: VITE_GEMINI_API_KEY not set. Set this in .env.local for development only.');
+            }
+            return;
+        }
+
         setStatus('connecting');
         setTranscriptions([]);
         currentInputRef.current = '';
         currentOutputRef.current = '';
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+        const ai = new GoogleGenAI({ apiKey: clientApiKey });
 
         let systemInstruction = `You are Mango-Mitra, a friendly and knowledgeable AI assistant for mango farmers. Converse with the user in ${languageNames[language]}. Help them with questions about mango cultivation, diseases, and interpreting the analysis results from the app. Keep your answers helpful and easy to understand.`;
 
