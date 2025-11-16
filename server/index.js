@@ -1,7 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -56,6 +61,11 @@ app.use((req, res, next) => {
     log.request(`${req.method} ${req.path} - ${timestamp}`);
     next();
 });
+
+// Serve static files from the dist directory (for production)
+const distPath = path.join(__dirname, '..', 'dist');
+app.use(express.static(distPath));
+log.info(`Serving static files from: ${distPath}`);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -173,17 +183,22 @@ Instructions:
     }
 });
 
-// Error handling for unhandled routes
-app.use((req, res) => {
-    log.warning(`404 - Route not found: ${req.method} ${req.path}`);
-    res.status(404).json({
-        error: 'Not Found',
-        message: `Cannot ${req.method} ${req.path}`,
-        availableEndpoints: [
-            'GET /health',
-            'POST /api/analyze-image'
-        ]
-    });
+// SPA fallback - serve index.html for all non-API routes
+app.get('*', (req, res) => {
+    // Only serve index.html for non-API routes
+    if (!req.path.startsWith('/api/') && !req.path.startsWith('/health')) {
+        res.sendFile(path.join(distPath, 'index.html'));
+    } else {
+        log.warning(`404 - API route not found: ${req.method} ${req.path}`);
+        res.status(404).json({
+            error: 'Not Found',
+            message: `Cannot ${req.method} ${req.path}`,
+            availableEndpoints: [
+                'GET /health',
+                'POST /api/analyze-image'
+            ]
+        });
+    }
 });
 
 // Global error handler
